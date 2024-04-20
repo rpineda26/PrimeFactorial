@@ -79,6 +79,7 @@ class View(QWidget):
         self.prime_result_label = QLabel("Is Prime: ")
         self.prime_result_data = QLineEdit()
         self.prime_result_data.setReadOnly(True)
+        self.prime_result_data.setStyleSheet("background-color: white")
         primeHBox.addWidget(self.prime_result_label)
         primeHBox.addWidget(self.prime_result_data)
         #add the prime widgets to the vertical layout
@@ -93,6 +94,7 @@ class View(QWidget):
         self.factorial_product_label = QLabel("Product: ")
         self.factorial_product_data = QTextEdit()
         self.factorial_product_data.setReadOnly(True)
+        self.factorial_product_data.setStyleSheet("background-color: white")
         factorialHBoxLayout.addWidget(self.factorial_product_label)
         factorialHBoxLayout.addWidget(self.factorial_product_data)
         #add the factorial widgets to the vertical layout
@@ -103,6 +105,12 @@ class View(QWidget):
                  when the input is empty, negative, or not a number.
     """
     def enableStartButton(self):
+        #reset colors of the label to display that results shown below are not based on the current input
+        self.factorial_product_label.setStyleSheet("color: black")
+        self.prime_result_label.setStyleSheet("color: black")
+        self.prime_result_data.setStyleSheet("color: black")
+
+        #enable the start button when the input is a non-negative integer
         if self.inputNumber.text() != "" and self.inputNumber.text().isnumeric():
             self.startButton.setEnabled(True)
         else:
@@ -117,9 +125,21 @@ class View(QWidget):
         """
         if self.startButton.isEnabled():
             #call the methods for primality test and factorial computation from the controller
+            primeResult = naive_isPrime(int(self.inputNumber.text()))
+            factorialResult = naive_factorial(int(self.inputNumber.text()))
             #update the GUI with the results
-            self.prime_result_data.setText(str(naive_isPrime(int(self.inputNumber.text()))))
-            self.factorial_product_data.setText(str(naive_factorial(int(self.inputNumber.text()))))
+            self.prime_result_data.setText(str (primeResult))
+            self.factorial_product_data.setText(str(factorialResult))
+
+            if(primeResult):
+                self.prime_result_data.setStyleSheet("color: green")
+            else:  
+                self.prime_result_data.setStyleSheet("color: red")
+
+            #display a visual signal that the results are based on the current input
+            self.prime_result_label.setStyleSheet("color: blue")
+            self.factorial_product_label.setStyleSheet("color: blue")
+
             #disable the start button after the computation, to prevent re-computation
             self.startButton.setEnabled(False) 
         else:
