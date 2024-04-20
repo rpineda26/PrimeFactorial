@@ -1,3 +1,4 @@
+import math
 from controller import *
 """
 @definition: This function tests the naive isPrime function by checking if it returns the correct result for prime and composite numbers
@@ -31,6 +32,12 @@ def test_optimized_isPrime(primes, composites):
 @definition: This function returns a predefined list of prime numbers up to 1000
 @returns: a list of prime numbers from 2 to 1000
 """
+def test_naive_factorial():
+    #998 is the ceiling to prevent exceeding python's recursive depth limit
+    for i in range(998):
+        #Im trusting the python math library to test my naive factorial function implementation
+        assert naive_factorial(i) == math.factorial(i)
+        
 def getPrimes():
     primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97,
               101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199,
@@ -102,4 +109,6 @@ if __name__ == "__main__":
     print("TEST#2: Optimized isPrime total tests conducted:", 100*len(getComposites()))
     print("TEST#2: Optimized isPrime false positives:", count)
     print("TEST#2: Optimized isPrime accuracy:",(100*len(getComposites())- count)/(100*len(getComposites())))
+    test_naive_factorial()
+    print("TEST#3: Naive factorial test passed")
 
