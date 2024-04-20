@@ -3,7 +3,6 @@ from math import sqrt
 """
 
     Author : Ralph Dawson G. Pineda
-    
     Description: This file contains the algorithms for primality test and factorial.
     
 """ 

@@ -117,11 +117,15 @@ class View(QWidget):
             self.startButton.setEnabled(False)
     """
     @definition: This function is called when the user clicks the start button. It will
-                    initialize the values needed to start tracing the transition of states
+                    call the primality test and factorial computation functions from the controller.
+                    Then, it will display the results in the GUI.
+            
     """
     def startCalculate(self):
         """
-        Start the path finding algorithm
+        the app can call startCalculate even when the start button is disabled
+        when the user utilizes the enter key instead of clicking the start button
+         so we need to check if the start button is enabled
         """
         if self.startButton.isEnabled():
             #call the methods for primality test and factorial computation from the controller
@@ -131,6 +135,7 @@ class View(QWidget):
             self.prime_result_data.setText(str (primeResult))
             self.factorial_product_data.setText(str(factorialResult))
 
+            #emphasize the boolean result based on the color
             if(primeResult):
                 self.prime_result_data.setStyleSheet("color: green")
             else:  
@@ -141,11 +146,16 @@ class View(QWidget):
             self.factorial_product_label.setStyleSheet("color: blue")
 
             #disable the start button after the computation, to prevent re-computation
-            self.startButton.setEnabled(False) 
+            self.startButton.setEnabled(False)
+            
+        #The else block will only be reached through the enter key
+        #scenario one: the input is negative, then the error message will be shown
+        #scenario two: After a successful computation, the user presses enter again without changing the input 
         else:
             #show an error message when the input is invalid (occurs when enter key is pressed with a negative input)
             if int(self.inputNumber.text()) < 0:
                 self.showEndMessage()
+            #nothing will happen when the user presses enter after a successful computation without changing the input
  
     """
     @definition: This function shows the error message when the user presses "Enter" after inputting a negative number. 
