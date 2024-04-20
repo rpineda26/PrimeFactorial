@@ -124,7 +124,8 @@ class View(QWidget):
             self.startButton.setEnabled(False) 
         else:
             #show an error message when the input is invalid (occurs when enter key is pressed with a negative input)
-            self.showEndMessage()
+            if int(self.inputNumber.text()) < 0:
+                self.showEndMessage()
  
     """
     @definition: This function shows the error message when the user presses "Enter" after inputting a negative number. 
