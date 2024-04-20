@@ -3,16 +3,10 @@ from math import sqrt
 """
 
     Author : Ralph Dawson G. Pineda
-    About: Technical Assessment for the position of Software Engineer Intern
-    Todo checklist:     
-
-    - [x] 1. Implement GUI for accepting input and displaying output
-    - [x] 2. Implement primality test
-    - [x] 3. Implement factorial computation
-    - [x] 4. Documentation
+    
+    Description: This file contains the algorithms for primality test and factorial.
+    
 """ 
-
-
 
 """
 @definition: This function checks if a number is prime or not. Time Complexity: O(n)

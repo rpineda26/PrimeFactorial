@@ -24,62 +24,78 @@ from controller import *
                                             QLabel (Factorial Result)
                                             QTextEdit (Factorial Result)                                       
 """
-
 class Machine(QWidget):
     def __init__(self):
         super().__init__()
+        #initialize the window
         self.setWindowTitle('Technical Assessment for Internship')
         self.setFixedWidth(720)
         self.setFixedHeight(360)
+
+        #initialize the main vertical layout
         self.vbox = QVBoxLayout()   
         self.vbox.setAlignment(Qt.AlignTop)
         self.setLayout(self.vbox)
+
+        #add the visual elements (input buttons, prime result, factorial result) to the layout
         self.displayInputBtns()
         self.displayPrimeResults()
         self.dispplayFactorialResults()
 
-    
     """
-    @definition: This function creates a horizontal layout to display the input buttons
+    @definition: This function creates a horizontal layout to display the input gui elements
+                This includes: input number label, input number text field, and start button
     """
     def displayInputBtns(self):
+
+        #initialize the horizontal layout and input buttons
         hbox = QHBoxLayout()
         self.startButton = QPushButton('Start')
         self.inputNumberLabel = QLabel('Input Non-negative Integer:')
         self.inputNumber = QLineEdit()
-        self.inputNumber.setValidator(QIntValidator())
+        #only accept integer inputs, this doesnt prevent negative inputs
+        self.inputNumber.setValidator(QIntValidator()) 
 
+        #add the input buttons to the horizontal layout
         hbox.addWidget(self.inputNumberLabel)
         hbox.addWidget(self.inputNumber)
         hbox.addWidget(self.startButton)
-        
 
+        #add event listeners for the input buttons
         self.startButton.clicked.connect(self.startCalculate)
         self.inputNumber.textChanged.connect(self.enableStartButton)
         self.inputNumber.returnPressed.connect(self.startCalculate)
 
+        #initialize the startButton as disabled
         self.startButton.setEnabled(False)
         self.vbox.addLayout(hbox)
     """
-    @definition: This function creates a horizontal layout to display the status bar
+    @definition: This function creates a horizontal layout to display the prime result gui elements
+                This includes: prime result label, prime result text field
     """
-
     def displayPrimeResults(self):
+        #initialize the horizontal layout and prime result gui elements
         primeHBox = QHBoxLayout()
         self.prime_result_label = QLabel("Is Prime: ")
         self.prime_result_data = QLineEdit()
         self.prime_result_data.setReadOnly(True)
         primeHBox.addWidget(self.prime_result_label)
         primeHBox.addWidget(self.prime_result_data)
-
+        #add the prime widgets to the vertical layout
         self.vbox.addLayout(primeHBox)
+    """
+    @definition: This function creates a horizontal layout to display the factorial result gui elements
+                This includes: factorial result label, factorial result text field
+    """
     def dispplayFactorialResults(self):
+        #initialize the horizontal layout and factorial result gui elements
         factorialHBoxLayout = QHBoxLayout()
         self.factorial_product_label = QLabel("Product: ")
         self.factorial_product_data = QTextEdit()
         self.factorial_product_data.setReadOnly(True)
         factorialHBoxLayout.addWidget(self.factorial_product_label)
         factorialHBoxLayout.addWidget(self.factorial_product_data)
+        #add the factorial widgets to the vertical layout
         self.vbox.addLayout(factorialHBoxLayout)
  
     """
@@ -111,8 +127,8 @@ class Machine(QWidget):
             self.showEndMessage()
  
     """
-    @definition: This function shows the message when the machine terminates. 
-                 It will display whether the word was accepted or rejected
+    @definition: This function shows the error message when the user presses "Enter" after inputting a negative number. 
+                 It will display a warning message to the user.
     """
     def showEndMessage(self):
         message = QMessageBox()
