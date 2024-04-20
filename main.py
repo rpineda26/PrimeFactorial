@@ -17,5 +17,5 @@ Todo checklist:
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     view = View()
-    view.showMaximized()
+    view.showNormal()
     sys.exit(app.exec_())
