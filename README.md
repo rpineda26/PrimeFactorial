@@ -36,3 +36,9 @@ python3 main.py
 1. the number input must be a non negative integer
 2. the start button will be enabled when a valid input is registered
 3. click the start button or press enter on the number input field to start the computation
+
+## :rocket: Test the program
+Run the defined automated tests with 
+```
+python test.py
+```

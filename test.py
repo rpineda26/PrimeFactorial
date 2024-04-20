@@ -95,6 +95,10 @@ def getComposites():
 
 950, 951, 952, 954, 955, 956, 957, 958, 959, 960, 961, 962, 963, 964, 965, 966, 968, 969, 970, 972, 973, 974, 975, 976, 978, 979, 980, 981, 982, 984, 985, 986, 987, 988, 989, 990, 992, 993, 994, 995, 996, 998, 999, 1000]
     return composites
+
+"""
+run the tests, display the results
+"""
 if __name__ == "__main__":
     test_naive_isPrime(getPrimes(), getComposites())
     print("TEST#1: Naive isPrime test passed")
