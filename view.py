@@ -24,7 +24,7 @@ from controller import *
                                             QLabel (Factorial Result)
                                             QTextEdit (Factorial Result)                                       
 """
-class Machine(QWidget):
+class View(QWidget):
     def __init__(self):
         super().__init__()
         #initialize the window
