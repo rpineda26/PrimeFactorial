@@ -3,15 +3,26 @@ Author: Ralph Dawson G. Pineda
 Date: April 2024
 Description: This file contains the view of the program. Make sure that the dependencies are installed in your device. Read the README.md for more information.
 """
-from PyQt5.QtWidgets import QMessageBox, QLabel, QFileDialog, QWidget, QGridLayout, QPushButton, QVBoxLayout, QHBoxLayout, QSizePolicy, QInputDialog, QLineEdit
-from PyQt5.QtGui import QPainter, QColor, QBrush, QFont, QIntValidator
+from PyQt5.QtWidgets import QMessageBox, QLabel, QWidget, QPushButton, QVBoxLayout, QHBoxLayout, QLineEdit, QTextEdit
+from PyQt5.QtGui import QIntValidator
 from PyQt5.QtCore import Qt
 
 from controller import *
 
 """
-@definition : This class is the view representation of the entire machine. The flow of user input is: (open text file -> (input word -> start -> step *)*)*) where * means repetition
-@attributes: machine - the DFA that is being represented by the view
+@definition : This class represents the view of the program. It is responsible for displaying the GUI of the program.
+
+            Overall Structure: Vertical Layout (vbox)
+                                    Horizontal layout (Input buttons)
+                                            QLabel (Input Number)
+                                            QLineEdit (Input Number)
+                                            QPushButton (Start)
+                                    Horizontal layout (Prime Result)
+                                            QLabel (Prime Result)
+                                            QLineEdit (Prime Result)
+                                    Horizontal layout (Factorial Result)
+                                            QLabel (Factorial Result)
+                                            QTextEdit (Factorial Result)                                       
 """
 
 class Machine(QWidget):
@@ -19,10 +30,8 @@ class Machine(QWidget):
         super().__init__()
         self.setWindowTitle('Technical Assessment for Internship')
         self.setFixedWidth(720)
-        self.setFixedHeight(720)
-
-        self.vbox = QVBoxLayout()
-        
+        self.setFixedHeight(360)
+        self.vbox = QVBoxLayout()   
         self.vbox.setAlignment(Qt.AlignTop)
         self.setLayout(self.vbox)
         self.displayInputBtns()
@@ -56,15 +65,22 @@ class Machine(QWidget):
     """
 
     def displayPrimeResults(self):
+        primeHBox = QHBoxLayout()
         self.prime_result_label = QLabel("Is Prime: ")
-        primeBox = QVBoxLayout()
-        primeBox.addWidget(self.prime_result_label)
-        self.vbox.addLayout(primeBox)
+        self.prime_result_data = QLineEdit()
+        self.prime_result_data.setReadOnly(True)
+        primeHBox.addWidget(self.prime_result_label)
+        primeHBox.addWidget(self.prime_result_data)
+
+        self.vbox.addLayout(primeHBox)
     def dispplayFactorialResults(self):
+        factorialHBoxLayout = QHBoxLayout()
         self.factorial_product_label = QLabel("Product: ")
-        factorialBox = QVBoxLayout()
-        factorialBox.addWidget(self.factorial_product_label)
-        self.vbox.addLayout(factorialBox)
+        self.factorial_product_data = QTextEdit()
+        self.factorial_product_data.setReadOnly(True)
+        factorialHBoxLayout.addWidget(self.factorial_product_label)
+        factorialHBoxLayout.addWidget(self.factorial_product_data)
+        self.vbox.addLayout(factorialHBoxLayout)
  
     """
     @definition: This function enables the start button when the user inputs a non negative number. The start button will not start
@@ -84,11 +100,14 @@ class Machine(QWidget):
         Start the path finding algorithm
         """
         if self.startButton.isEnabled():
-            primeFlag = isPrime(int(self.inputNumber.text()))
-            factorialProduct = factorial(int(self.inputNumber.text()))
-            self.prime_result_label.setText("Is Prime: "+str(primeFlag))
-            self.factorial_product_label.setText("Product: "+str(factorialProduct))
+            #call the methods for primality test and factorial computation from the controller
+            #update the GUI with the results
+            self.prime_result_data.setText(str(naive_isPrime(int(self.inputNumber.text()))))
+            self.factorial_product_data.setText(str(naive_factorial(int(self.inputNumber.text()))))
+            #disable the start button after the computation, to prevent re-computation
+            self.startButton.setEnabled(False) 
         else:
+            #show an error message when the input is invalid (occurs when enter key is pressed with a negative input)
             self.showEndMessage()
  
     """

@@ -24,7 +24,7 @@ def naive_isPrime(num):
     if num > 1:
         for i in range(2,num):
             if (num % i) == 0:
-                return False
+                return False # if the number is divisible by any number other than 1 and itself, it is not prime
         else:
             return True
     else: # 0 and 1 are not prime numbers
@@ -38,7 +38,7 @@ def naive_isPrime(num):
         num * factorial(num-1) - recursive case
 """
 def naive_factorial(num):
-    if num == 0: #base case
+    if num == 0: #base case 0! = 1
         return 1
     else:
         return num * naive_factorial(num-1) #recursive case
