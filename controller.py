@@ -1,4 +1,4 @@
-from model import Machine_2DFA
+
 from math import sqrt
 """
 
