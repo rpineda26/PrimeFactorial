@@ -61,7 +61,7 @@ def test_naive_factorial():
 """
 @definition: This function tests the optimized factorial function by comparing it with the math library's factorial function
 """
-def test_optimized_factorial():
+def test_optimized_factorial_should_memoize():
     #998 is the ceiling to prevent exceeding python's recursive depth limit
     for i in range(1200):
         try:
@@ -71,7 +71,8 @@ def test_optimized_factorial():
             assert actual == expected
         except AssertionError:
             print("optimized_factorial returned an incorrect value for: ",i)
-     
+def test_optimized_factorial_should_not_memoize():    
+    assert optimized_factorial(max=186) == math.factorial(186) 
     
         
 def getPrimes():
@@ -159,6 +160,9 @@ if __name__ == "__main__":
     print("TEST#4: Optimized isPrime deterministic total tests conducted:", 100*len(getComposites()))
     print("TEST#4: Optimized isPrime deterministic false positives:", count)
     print("TEST#4: Optimized isPrime deterministic accuracy:",(100*len(getComposites())- count)/(100*len(getComposites())))
-    test_optimized_factorial()
-    print("TEST#5: Optimized factorial test passed. Max number TESTED: 1200")
+    
+    print("TEST#5: Optimized factorial test. Should not access memoization")
+    test_optimized_factorial_should_not_memoize()
+    #print("TEST#5: Optimized factorial test. Max number TESTED: 1200, should access memoization")
+    #test_optimized_factorial_should_memoize()
 
