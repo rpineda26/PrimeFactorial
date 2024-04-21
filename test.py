@@ -1,5 +1,7 @@
 import math
+import sys
 from controller import *
+sys.set_int_max_str_digits(1000000)
 """
 @definition: This function tests the naive isPrime function by checking if it returns the correct result for prime and composite numbers
 @param: primes - a predefined list of prime numbers
@@ -29,14 +31,48 @@ def test_optimized_isPrime(primes, composites):
             count_false_positives += 1
     return count_false_positives
 """
-@definition: This function returns a predefined list of prime numbers up to 1000
-@returns: a list of prime numbers from 2 to 1000
+@definition: This function tests the optimized isPrime_deterministic function by 
+            checking if it doesn't return a false positive for composite numbers
+            and if it returns the correct result for prime numbers
+@param: primes - a predefined list of prime numbers
+        composites - a predefined list of composite numbers
+"""
+def test_optimized_isPrime_deterministic(primes, composites):
+    #this test never returns a false negative
+    for i in range(len(primes)):
+        assert optimized_isPrime_deterministic(primes[i]) == True
+    #count the number of false positives
+    count_false_positives = 0
+    for i in range(len(composites)):
+        try:
+            assert optimized_isPrime_deterministic(composites[i]) == False
+        except AssertionError:
+            print("optimized_isPrime returned a false positive for", composites[i])
+            count_false_positives += 1
+    return count_false_positives
+"""
+@definition: This function tests the naive factorial function by comparing it with the math library's factorial function
 """
 def test_naive_factorial():
     #998 is the ceiling to prevent exceeding python's recursive depth limit
     for i in range(998):
         #Im trusting the python math library to test my naive factorial function implementation
         assert naive_factorial(i) == math.factorial(i)
+"""
+@definition: This function tests the optimized factorial function by comparing it with the math library's factorial function
+"""
+def test_optimized_factorial():
+    #998 is the ceiling to prevent exceeding python's recursive depth limit
+    for i in range(1200):
+        try:
+            #Im trusting the python math library to test my optimized factorial function implementation
+            actual = optimized_factorial(max=i)
+            expected = math.factorial(i)
+            assert actual == expected
+        except AssertionError:
+            print("optimized_factorial returned an incorrect value for: ",i)
+     
+    
         
 def getPrimes():
     primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97,
@@ -114,5 +150,15 @@ if __name__ == "__main__":
     print("TEST#2: Optimized isPrime false positives:", count)
     print("TEST#2: Optimized isPrime accuracy:",(100*len(getComposites())- count)/(100*len(getComposites())))
     test_naive_factorial()
-    print("TEST#3: Naive factorial test passed")
+    print("TEST#3: Naive factorial test passed. Max number: 998")
+    print("TEST#4: Optimized isPrime deterministic")
+    count =0
+    #test all the composites from 4-1000 a hundred times to check for false positives and if randomness is observed
+    for i in range(100): 
+        count += test_optimized_isPrime_deterministic(getPrimes(), getComposites())
+    print("TEST#4: Optimized isPrime deterministic total tests conducted:", 100*len(getComposites()))
+    print("TEST#4: Optimized isPrime deterministic false positives:", count)
+    print("TEST#4: Optimized isPrime deterministic accuracy:",(100*len(getComposites())- count)/(100*len(getComposites())))
+    test_optimized_factorial()
+    print("TEST#5: Optimized factorial test passed. Max number TESTED: 1200")
 

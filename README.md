@@ -42,3 +42,7 @@ Run the defined automated tests with
 ```
 python test.py
 ```
+- The tests for the primality functions use integers up to 1000.
+- The test for factorial computation relies on comparing the actual results with the results from pythons math library factorial function.
+- The test for naive factorial is limited to n= 998 due to pythons limit for recursive depth.
+- optimized factorial can go beyond n=998
