@@ -163,6 +163,6 @@ if __name__ == "__main__":
     
     print("TEST#5: Optimized factorial test. Should not access memoization")
     test_optimized_factorial_should_not_memoize()
-    #print("TEST#5: Optimized factorial test. Max number TESTED: 1200, should access memoization")
-    #test_optimized_factorial_should_memoize()
+    print("TEST#5: Optimized factorial test. Max number TESTED: 1200, should access memoization")
+    test_optimized_factorial_should_memoize()
 

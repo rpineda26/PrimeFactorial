@@ -143,18 +143,19 @@ def optimized_isPrime_deterministic(num):
         #It is necessary to use the binary exponentiation implementation for calculating the power of x^a 
         x = power_binary(a, num-1, num)
         if x == 1:
+            continue
         #passes the primality test, test another number
         #to decrease the probability of a false positive
 
         #n-1 is even as num is odd > 3
         #this loop terminates when temp is no longer divisible by 2
         #count is the number of times that n-1 is divisible by 2
-            temp = num -1
-            while temp % 2 == 0:
-                if x == num-1:
-                    break
-                x = power_binary(x, 2, num)
-                temp = temp // 2
+        temp = num -1
+        while temp % 2 == 0:
+            if x == num-1:
+                break
+            x = power_binary(x, 2, num)
+            temp = temp // 2
         else:
             return False
     return True
@@ -184,8 +185,12 @@ def optimized_factorial(min = 1, max=1):
     #This if block is reached when div_conq_multiply(min, mid) is called
     if min ==1:
         #check if the value of mid! already stored in the memoization table
+        if DP[max]!=0:
+            #print("I am called for memoization")
+            #store the result for max! in the memoization table
+            return DP[max]
         if DP[mid]!=0:
-            print("I am called for memoization")
+            #print("I am called for memoization")
             #store the result for max! in the memoization table
             DP[max] = DP[mid] * optimized_factorial(mid+1, max)
         else:
