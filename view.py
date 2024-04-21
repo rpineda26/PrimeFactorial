@@ -129,8 +129,8 @@ class View(QWidget):
         """
         if self.startButton.isEnabled():
             #call the methods for primality test and factorial computation from the controller
-            primeResult = naive_isPrime(int(self.inputNumber.text()))
-            factorialResult = naive_factorial(int(self.inputNumber.text()))
+            primeResult = optimized_isPrime_deterministic(int(self.inputNumber.text()))
+            factorialResult = optimized_factorial(max=int(self.inputNumber.text()))
             #update the GUI with the results
             self.prime_result_data.setText(str (primeResult))
             self.factorial_product_data.setText(str(factorialResult))
